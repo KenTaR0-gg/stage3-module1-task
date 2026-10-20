@@ -3,7 +3,7 @@ package com.mjc;
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.repository.implementation.DataSource;
 import com.mjc.school.repository.implementation.NewsRepository;
-import com.mjc.school.service.NewsService;
+import com.mjc.school.service.implementation.NewsService;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.exception.ValidatorException;
 
