@@ -1,5 +1,6 @@
-package com.mjc.school.repository;
+package com.mjc.school.repository.implementation;
 
+import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.NewsModel;
 
 import java.util.List;
