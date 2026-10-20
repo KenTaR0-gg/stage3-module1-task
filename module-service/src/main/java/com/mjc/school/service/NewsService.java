@@ -74,7 +74,7 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
     }
 
     @Override
-    public boolean delete(Long id) {
+    public Boolean delete(Long id) {
         if (newsRepository.readById(id) == null) {
             throw new ValidatorException("ERROR-003", "News with id " + id + " does not exist.");
         }

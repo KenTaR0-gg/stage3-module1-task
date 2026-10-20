@@ -7,5 +7,5 @@ public interface BaseService<T, R, K> {
     R readById(K id);
     R create(T createRequest);
     R update(T updateRequest);
-    boolean delete(K id);
+    Boolean delete(K id);
 }

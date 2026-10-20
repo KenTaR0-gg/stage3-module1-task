@@ -7,5 +7,5 @@ public interface BaseRepository<T, K> {
     T readById(K id);
     T create(T entity);
     T update(T entity);
-    boolean delete(K id);
+    Boolean delete(K id);
 }

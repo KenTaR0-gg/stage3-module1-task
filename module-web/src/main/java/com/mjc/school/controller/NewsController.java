@@ -30,7 +30,7 @@ public class NewsController {
         return newsService.update(updateRequest);
     }
 
-    public boolean delete(Long id) {
+    public Boolean delete(Long id) {
         return newsService.delete(id);
     }
 }
