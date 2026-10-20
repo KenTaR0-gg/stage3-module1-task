@@ -7,6 +7,7 @@ import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exception.ValidatorException;
 import com.mjc.school.service.mapper.NewsMapper;
+import com.mjc.school.service.validator.NewsValidator; // <-- Импортируем нашего инспектора
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,17 +17,10 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
 
     private final BaseRepository<NewsModel, Long> newsRepository;
 
+    private final NewsValidator validator = new NewsValidator();
+
     public NewsService(BaseRepository<NewsModel, Long> newsRepository) {
         this.newsRepository = newsRepository;
-    }
-
-    private void validateNews(NewsDtoRequest request) {
-        if (request.getTitle() == null || request.getTitle().length() < 5 || request.getTitle().length() > 30) {
-            throw new ValidatorException("ERROR-001", "News title can not be less than 5 and more than 30 symbols.");
-        }
-        if (request.getContent() == null || request.getContent().length() < 5 || request.getContent().length() > 255) {
-            throw new ValidatorException("ERROR-002", "News content can not be less than 5 and more than 255 symbols.");
-        }
     }
 
     @Override
@@ -47,21 +41,19 @@ public class NewsService implements BaseService<NewsDtoRequest, NewsDtoResponse,
 
     @Override
     public NewsDtoResponse create(NewsDtoRequest createRequest) {
-
-        validateNews(createRequest);
+        validator.validateNewsDto(createRequest);
 
         NewsModel model = NewsMapper.INSTANCE.dtoToModel(createRequest);
         model.setCreateDate(LocalDateTime.now());
         model.setLastUpdateDate(LocalDateTime.now());
 
         NewsModel savedModel = newsRepository.create(model);
-
         return NewsMapper.INSTANCE.modelToDto(savedModel);
     }
 
     @Override
     public NewsDtoResponse update(NewsDtoRequest updateRequest) {
-        validateNews(updateRequest);
+        validator.validateNewsDto(updateRequest);
 
         if (newsRepository.readById(updateRequest.getId()) == null) {
             throw new ValidatorException("ERROR-003", "News with id " + updateRequest.getId() + " does not exist.");
